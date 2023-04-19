@@ -17,25 +17,33 @@
     <div ref="touchArea" class="slider-items">
       <slot />
     </div>
-    <div
-      v-if="indicators"
-      :class="`slider-indicators slider-indicators-${indicators}`"
-      @click.stop
+
+    <slot name="indicators"
+      :indicators="indicators"
+      :sliderItems="sliderItems"
+      :currentIndex="currentIndex"
+      :handleIndicator="handleIndicator"
     >
-      <span
-        v-for="i in sliderItems.length"
-        :key="i"
-        :class="{ 'slider-indicator-active': currentIndex === i - 1 }"
-        class="slider-indicator-icon"
-        @click="handleIndicator(i - currentIndex - 1)"
-      />
-    </div>
+      <div
+        v-if="indicators"
+        :class="`slider-indicators slider-indicators-${indicators}`"
+        @click.stop
+      >
+        <span
+          v-for="i in sliderItems.length" :key="i"
+          :class="{ 'slider-indicator-active': currentIndex === i - 1 }"
+          class="slider-indicator-icon"
+          @click="handleIndicator(i - currentIndex - 1)"
+        />
+      </div>
+    </slot>
+
     <template v-if="controlBtn">
       <button type="button" class="slider-btn slider-btn-left" :aria-label="prevBtnLabel" @click.stop="prev">
-        <i class="slider-icon slider-icon-left" aria-hidden="true"/>
+        <i class="slider-icon slider-icon-left" aria-hidden="true" />
       </button>
       <button type="button" class="slider-btn slider-btn-right" :aria-label="nextBtnLabel" @click.stop="next">
-        <i class="slider-icon slider-icon-right" aria-hidden="true"/>
+        <i class="slider-icon slider-icon-right" aria-hidden="true" />
       </button>
     </template>
   </div>
